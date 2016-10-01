@@ -1,0 +1,31 @@
+{
+  "name": "cc1",
+  "version": "1.0.0",
+  "description": "Dojo node",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ccamilobedoya/DOJO_Node_2.git"
+  },
+  "keywords": [
+    "node",
+    "rest",
+    "postgres"
+  ],
+  "author": "Cristian Bedoya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ccamilobedoya/DOJO_Node_2/issues"
+  },
+  "homepage": "https://github.com/ccamilobedoya/DOJO_Node_2#readme",
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "pg-promise": "^5.3.3"
+  }
+}
