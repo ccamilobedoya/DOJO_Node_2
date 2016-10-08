@@ -42,7 +42,7 @@ function getRestaurantByName (req, res, next) {
 
 function createRestaurant (req, res, next) {
 	// none es que no va a retornar nada
-	db.none('insert into restaurant(name, city, address, phone)' + 'values($1, $2, $3, $4)', 
+	db.none('insert into restaurant(name, city, address, phone)' + 'values($1, $2, $3, $4)',
 			[req.body.name, req.body.city, req.body.address, parseInt(req.body.phone)])
 		.then(function(){
 			res.status(200)
@@ -73,7 +73,7 @@ function removeRestaurant (req, res, next) {
 };
 
 function updateRestaurant (req, res, next) {
-	db.none('update restaurant set name=$1, city=$2, address=$3, phone=$4 where id=$5', 
+	db.none('update restaurant set name=$1, city=$2, address=$3, phone=$4 where id=$5',
 			[req.body.name, req.body.city, req.body.address, parseInt(req.body.phone), parseInt(req.params.id)])
 		.then(function(){
 			res.status(200)
@@ -87,10 +87,59 @@ function updateRestaurant (req, res, next) {
 		});
 };
 
+function getAllMenu(req, res, next){
+	db.any('select * from menu')
+	.then(function(data){
+			res.status(200)
+			.json({
+				status: 'Exitoso',
+				data: data,
+				message: 'Recuperados todos los menus'
+			});
+	})
+	.catch(function(err){
+		return next(err);
+	});
+};
+
+function getMenuByRestaurant(req,res,next){
+	db.any('select * from menu  where restaurant=$1',req.params.id)
+	.then(function(data){
+			res.status(200)
+			.json({
+				status:'Exitoso',
+				data:data,
+				message: 'Recuperados menus por restaurante'
+			});
+	})
+	.catch(function(err){
+		return next(err);
+	});
+};
+
+function createMenu(req,res,next){
+	db.none('insert into menu(name,description,price,restaurant) values ($1,$2,$3,$4)',
+		[req.body.name, req.body.description, parseInt(req.body.price), parseInt(req.body.restaurant)]
+	)
+	.then(function(data){
+			res.status(200)
+			.json({
+				status:'Exitoso',
+				message: 'Insertado menu'
+			});
+	})
+	.catch(function(err){
+		return next(err);
+	});
+};
+
 module.exports = {
 	getAllRestaurants : getAllRestaurants,
 	getRestaurantByName : getRestaurantByName,
 	createRestaurant : createRestaurant,
 	removeRestaurant : removeRestaurant,
-	updateRestaurant : updateRestaurant
+	updateRestaurant : updateRestaurant,
+	getAllMenu:getAllMenu,
+	getMenuByRestaurant:getMenuByRestaurant,
+	createMenu:createMenu
 }
